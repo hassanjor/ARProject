@@ -12,16 +12,20 @@ public class Board : MonoBehaviour
     // the planes making the board
     [SerializeField] private Tile tileprefab;
 
+    bool clicked = false;
+
+
+
+
     void Start()
     {
         placeindicator = FindObjectOfType<PlaceIndicator>();
     }
 
-   
-
-   public  void onClicked()
+   public void onClicked()
     {
-        GenerateBoard();
+        clicked = true;
+        //GenerateBoard();
     }
 
     public void GenerateBoard()
@@ -35,7 +39,7 @@ public class Board : MonoBehaviour
             for(int x = 0; x < height; x++)
             {
                 //instansiate
-                var spawnedTile = Instantiate(tileprefab, placeindicator.transform.position + new Vector3(x, 0, y), Quaternion.identity);
+                var spawnedTile = Instantiate(tileprefab, placeindicator.transform.position - new Vector3(0, 13, 0) + new Vector3(x, 0, y), Quaternion.identity);
 
               
                 //print the tiles with the spot number
@@ -50,6 +54,16 @@ public class Board : MonoBehaviour
         }
 
 
+    }
+
+    void Update()
+    {
+        if (clicked == true)
+        {
+            GenerateBoard();
+            clicked = false;
+        }
+            
     }
 
 
