@@ -6,7 +6,7 @@ public class Board : MonoBehaviour
 {
 
     private PlaceIndicator placeindicator;
-
+    [SerializeField] private GameObject Parent; 
     // width and height 
     [SerializeField] private int width = 0, height = 0;
     // the planes making the board
@@ -25,9 +25,17 @@ public class Board : MonoBehaviour
    public void onClicked()
     {
         clicked = true;
-        //GenerateBoard();
+       
     }
 
+    void Update()
+    {
+        if (clicked)
+        {
+            GenerateBoard();
+            clicked = false;
+        }
+    }
     public void GenerateBoard()
     {
 
@@ -39,9 +47,9 @@ public class Board : MonoBehaviour
             for(int x = 0; x < height; x++)
             {
                 //instansiate
-                var spawnedTile = Instantiate(tileprefab, placeindicator.transform.position - new Vector3(0, 13, 0) + new Vector3(x, 0, y), Quaternion.identity);
+                var spawnedTile = Instantiate(tileprefab, placeindicator.transform.position + new Vector3(x, -13, y), Quaternion.identity, Parent.transform);
 
-              
+
                 //print the tiles with the spot number
                 spawnedTile.name = $"Tile {x} {y}";
 
@@ -52,19 +60,10 @@ public class Board : MonoBehaviour
               
             }
         }
-
+        
 
     }
 
-    void Update()
-    {
-        if (clicked == true)
-        {
-            GenerateBoard();
-            clicked = false;
-        }
-            
-    }
 
 
 }
