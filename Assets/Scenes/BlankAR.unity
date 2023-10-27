@@ -1012,7 +1012,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToPlace: {fileID: 369599903}
+  Indicator: {fileID: 322949384}
   board: {fileID: 369599906}
+  button: {fileID: 409804359}
 --- !u!4 &1660982097
 Transform:
   m_ObjectHideFlags: 0

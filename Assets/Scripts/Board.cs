@@ -31,8 +31,8 @@ public class Board : MonoBehaviour
             for(int x = 0; x < height; x++)
             {
                 //instansiate
-                var spawnedTile = Instantiate(tileprefab, new Vector3(x, -13, y), Quaternion.identity, Parent.transform);
-                Debug.Log(spawnedTile);
+                var spawnedTile = Instantiate(tileprefab, new Vector3(x - 5, -13, y - 5), Quaternion.identity, Parent.transform);
+             
 
                 //print the tiles with the spot number
                 spawnedTile.name = $"Tile {x} {y}";
