@@ -4,38 +4,22 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-
-    private PlaceIndicator placeindicator;
-    [SerializeField] private GameObject Parent; 
+    private PlaceIndicator placeIndicator;
+    [SerializeField] public GameObject Parent; 
     // width and height 
     [SerializeField] private int width = 0, height = 0;
     // the planes making the board
     [SerializeField] private Tile tileprefab;
 
-    bool clicked = false;
 
 
-
+    public bool clicked = false;
 
     void Start()
     {
-        placeindicator = FindObjectOfType<PlaceIndicator>();
+        placeIndicator = FindObjectOfType<PlaceIndicator>();
     }
 
-   public void onClicked()
-    {
-        clicked = true;
-       
-    }
-
-    void Update()
-    {
-        if (clicked)
-        {
-            GenerateBoard();
-            clicked = false;
-        }
-    }
     public void GenerateBoard()
     {
 
@@ -47,8 +31,8 @@ public class Board : MonoBehaviour
             for(int x = 0; x < height; x++)
             {
                 //instansiate
-                var spawnedTile = Instantiate(tileprefab, placeindicator.transform.position + new Vector3(x, -13, y), Quaternion.identity, Parent.transform);
-
+                var spawnedTile = Instantiate(tileprefab, new Vector3(x, -13, y), Quaternion.identity, Parent.transform);
+                Debug.Log(spawnedTile);
 
                 //print the tiles with the spot number
                 spawnedTile.name = $"Tile {x} {y}";
@@ -60,7 +44,6 @@ public class Board : MonoBehaviour
               
             }
         }
-        
 
     }
 
