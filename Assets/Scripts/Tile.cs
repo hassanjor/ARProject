@@ -7,7 +7,7 @@ public class Tile : MonoBehaviour
     //both materials
     [SerializeField] private Material baseMaterial, offsetMaterial;
     //The rendere inside the object
-    [SerializeField] private MeshRenderer renderer;
+    [SerializeField] public MeshRenderer renderer;
 
 
     void Start()
