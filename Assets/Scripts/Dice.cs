@@ -10,11 +10,14 @@ public class Dice : MonoBehaviour
     [SerializeField] float _torqueMaximum = 2;
     [SerializeField] float _throwStrength = 10;
     [SerializeField] TextMeshProUGUI _textBox;
-    Rigidbody _rb;
-    
+    public Rigidbody _rb;
+    public int rollValue;
+    public bool rollDice = false;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        
     }
 
     public void RollTheDice()
@@ -23,8 +26,8 @@ public class Dice : MonoBehaviour
 
         _rb.AddTorque(transform.forward * Random.Range(_torqueMinimum, _torqueMaximum) + transform.up * Random.Range(_torqueMinimum, _torqueMaximum) + transform.right * Random.Range(_torqueMinimum, _torqueMaximum));
         _textBox.text = "";
-
         StartCoroutine(WaitForStop());
+        
     }
 
     IEnumerator WaitForStop()
@@ -46,7 +49,7 @@ public class Dice : MonoBehaviour
          */
 
         float yDot, xDot, zDot;
-        int rollValue = -1;
+        rollValue = -1;
 
         yDot = Mathf.Round(Vector3.Dot(transform.up.normalized, Vector3.up)); //This rounds it in case of any angle change
         xDot = Mathf.Round(Vector3.Dot(transform.forward.normalized, Vector3.up));
@@ -79,6 +82,7 @@ public class Dice : MonoBehaviour
                 rollValue = 3;
                 break;
         }
+        rollDice = true;
         _textBox.text = rollValue.ToString();
     }
 }

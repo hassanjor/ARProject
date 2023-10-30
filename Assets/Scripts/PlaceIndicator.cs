@@ -23,17 +23,17 @@ public class PlaceIndicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         var ray = new Vector2(Screen.width / 2, Screen.height / 2);
 
-        if(raycastManager.Raycast(ray, hits, TrackableType.Planes))
+        if (raycastManager.Raycast(ray, hits, TrackableType.Planes))
         {
             Pose hitPose = hits[0].pose;
 
             transform.position = hitPose.position;
             transform.rotation = hitPose.rotation;
 
-            if(!indicator.activeInHierarchy)
+            if (!indicator.activeInHierarchy)
             {
                 indicator.SetActive(true);
 

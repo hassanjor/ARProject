@@ -1,27 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
     private PlaceIndicator placeIndicator;
+    public Button button;
+    public GameObject Indicator;
+
     [SerializeField] public GameObject Parent; 
     // width and height 
-    [SerializeField] private int width = 0, height = 0;
+    [SerializeField] public int width = 0, height = 0;
     // the planes making the board
-    [SerializeField] private Tile tileprefab;
+    [SerializeField] public Tile tileprefab;
 
-
+    public bool BoardGenerated = false;
 
     public bool clicked = false;
+
+    public Tile[,] tileArray;
 
     void Start()
     {
         placeIndicator = FindObjectOfType<PlaceIndicator>();
     }
 
+    public void Clicked()
+    {
+        GenerateBoard();
+        BoardGenerated = true;
+
+        button.gameObject.SetActive(false);
+        Indicator.SetActive(false);
+
+        Destroy(Indicator);
+        Destroy(button);
+
+
+
+    }
+
     public void GenerateBoard()
     {
+        tileArray = new Tile[width, height];
 
         //Making the board
         // X and Y are flipped because in the editor doing it this way looks correct
@@ -31,7 +54,7 @@ public class Board : MonoBehaviour
             for(int x = 0; x < height; x++)
             {
                 //instansiate
-                var spawnedTile = Instantiate(tileprefab, new Vector3(x - 5, -13, y - 5), Quaternion.identity, Parent.transform);
+                var spawnedTile = Instantiate(tileprefab, placeIndicator.transform.position + new Vector3(x - 5, -13, y - 5), Quaternion.identity, Parent.transform);
              
 
                 //print the tiles with the spot number
@@ -41,10 +64,10 @@ public class Board : MonoBehaviour
                 var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
                 spawnedTile.Init(isOffset);
 
-              
+                // Store the tile in the array
+                tileArray[y, x] = spawnedTile;
             }
         }
-
     }
 
 
