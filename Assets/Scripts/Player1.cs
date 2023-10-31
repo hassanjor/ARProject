@@ -21,18 +21,21 @@ public class Player1 : MonoBehaviour
     private bool StartGame = true;
     //Tracks the player current position
     private int currentPosition = 0;
-    public int interpolationFramesCount = 45; // Number of frames to completely interpolate between the 2 positions
+    //emulator stuff for lerping 
+    public int interpolationFramesCount = 45; 
     int elapsedFrames = 0;
+
+    //manipulates button spawning
     bool diceRolled = false;
-    Vector3 snake1pos;
+
+    //animations references to detect when they are done
     public string animationName;
+    public string ladderAnimationName;
     void Start()
     {
-        //deactivate the roll button and dice
+        //deactivate the roll button, and dice
         button.gameObject.SetActive(false);
         dice.gameObject.SetActive(false);
-
-        snake1pos = board.tileArray[2, 3].transform.position;
     }
 
     void StartPlayerPosition()
@@ -47,12 +50,15 @@ public class Player1 : MonoBehaviour
     {
         //Move player depending on the dice rolled value
         int result = dice.rollValue;
+        //+= adds onto it so it always is saving the position
         currentPosition += result;
+        //lerping using a value
         float interpolationRatio = (float)elapsedFrames / interpolationFramesCount;
         //this considers the width and height of the board that the player cant go off it and will instead go to the next row 
         Vector3 worldPosition = board.tileArray[currentPosition % board.width, currentPosition / board.width].transform.position;
-        // Start a coroutine to smoothly move the player
+        //set is walking to true so the animation plays
         animator.SetBool("isWalking?", true);
+        // Start a coroutine to smoothly move the player
         StartCoroutine(MovePlayer(worldPosition));
 
     }
@@ -74,6 +80,7 @@ public class Player1 : MonoBehaviour
 
         //the final position is exactly the target position
         transform.position = targetPosition;
+        //back to idle
         animator.SetBool("isWalking?", false);
     }
 
@@ -87,7 +94,11 @@ public class Player1 : MonoBehaviour
 
     void Update()
     {
+
+        Debug.Log(currentPosition);
+
         //If the board was spawned move the player to the first Tile
+        //and move the dice to the middle
         if (board.BoardGenerated && StartGame)
         {
             player1.SetActive(true);
@@ -104,48 +115,91 @@ public class Player1 : MonoBehaviour
             PlayerMovement();
             dice.rollDice = false;
             diceRolled = true;
+            //re position the dice at the middle after
             dice._rb.position = board.tileArray[5, 5].transform.position + new Vector3(0, 2, 0);
         }
-
+        //manipulating button appearing
         if(diceRolled)
         {
             button.gameObject.SetActive(true);
             diceRolled = false;
         }
 
-        Debug.Log(currentPosition);
+        
         //Snake check 
         if (currentPosition == 23)
         {
+            //disable button
+            button.gameObject.SetActive(false);
+            //play the sad animation
             animator.SetBool("Lost?", true);
             Debug.Log("AAAAAAAAAAA");
-            // Check if the specific animation is over
+           
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
+            // Check if the sad animation is over
             if (stateInfo.IsName(animationName) && stateInfo.normalizedTime >= 1.0f)
             {
+                //move player down to snake tail
                 StartCoroutine(MovePlayer(board.tileArray[4, 0].transform.position));
-                animator.SetBool("Lost?", false);
+                //set current position to the position player was moved to 
                 currentPosition = 4;
-                //Vector3 worldPosition = board.tileArray[0, 4].transform.position;
-                //transform.position = worldPosition;
+                //stop sad animation
+                animator.SetBool("Lost?", false);
+                //activate button again
+                button.gameObject.SetActive(true);
             }
+           
         }
 
         //Snake 2
         if (currentPosition == 55)
-        {
+        {  
+            //disable button
+            button.gameObject.SetActive(false);
+            //play the sad animation
             animator.SetBool("Lost?", true);
             Debug.Log("AAAAAAAAAAA");
-            // Check if the specific animation is over
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
+            
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            // Check if the specific animation is over
             if (stateInfo.IsName(animationName) && stateInfo.normalizedTime >= 1.0f)
             {
+                //move player down to snake tail
                 StartCoroutine(MovePlayer(board.tileArray[6, 3].transform.position));
+                //set current position to the position player was moved to 
                 currentPosition = 36;
+                //stop sad animation
                 animator.SetBool("Lost?", false);
+                //activate button again
+                button.gameObject.SetActive(true);
             }
+            
+        }
+
+        //Ladder check
+        if (currentPosition == 7)
+        {
+            //disable button
+            button.gameObject.SetActive(false);
+            //play the happy animation
+            animator.SetBool("Victory?", true);
+            Debug.Log("YAYYYYYY");
+           
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            // Check if the specific animation is over
+            if (stateInfo.IsName(ladderAnimationName) && stateInfo.normalizedTime >= 1.0f)
+            {
+                //move player up the ladder
+                StartCoroutine(MovePlayer(board.tileArray[7, 2].transform.position));
+                //set current position to the position player was moved to 
+                currentPosition = 27;
+                //stop happy animation
+                animator.SetBool("Victory?", false);
+                //activate button again
+                button.gameObject.SetActive(true);
+            }
+            
         }
 
     }
