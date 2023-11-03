@@ -201,7 +201,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dd62c4c2482e0d84ab1b571f85fee298,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1412707573}
   m_SourcePrefab: {fileID: 100100000, guid: dd62c4c2482e0d84ab1b571f85fee298, type: 3}
 --- !u!1001 &239915307
 PrefabInstance:
@@ -1881,7 +1885,11 @@ MonoBehaviour:
   board: {fileID: 369599906}
   dice: {fileID: 239915310}
   player1: {fileID: 1356532484}
+  StartGame: 1
+  currentPosition: 0
   interpolationFramesCount: 100
+  elapsedFrames: 0
+  diceRolled: 0
   animationName: Defeat
   ladderAnimationName: Victory
 --- !u!95 &1356532488 stripped
@@ -1973,6 +1981,42 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1403654594}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1412707570 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dd62c4c2482e0d84ab1b571f85fee298,
+    type: 3}
+  m_PrefabInstance: {fileID: 27237084}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1412707571 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: dd62c4c2482e0d84ab1b571f85fee298,
+    type: 3}
+  m_PrefabInstance: {fileID: 27237084}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1412707573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412707570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45af4964a4a8aae4dbc23d869356d61b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1412707571}
+  button: {fileID: 1284993138}
+  board: {fileID: 369599906}
+  dice: {fileID: 239915310}
+  player1: {fileID: 1412707570}
+  StartGame: 1
+  currentPosition: 0
+  interpolationFramesCount: 100
+  elapsedFrames: 0
+  diceRolled: 0
+  animationName: Defeat
+  ladderAnimationName: Victory
 --- !u!1 &1524748237
 GameObject:
   m_ObjectHideFlags: 0
