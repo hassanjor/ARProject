@@ -27,6 +27,7 @@ public class Player1 : MonoBehaviour
 
     //manipulates button spawning
     public bool diceRolled = false;
+    //both static variables so the values stay the same in parent and child
     public static bool Player1Turn = true;
     public static bool Player2Turn = false;
     //animations references to detect when they are done
@@ -95,6 +96,8 @@ public class Player1 : MonoBehaviour
 
     void Update()
     {
+        //dont check any of this unless its player 1 turn
+        //first time will always be player 1 turn 
         if (Player1Turn == true)
         {
             Debug.Log(currentPosition);
@@ -119,6 +122,7 @@ public class Player1 : MonoBehaviour
                 diceRolled = true;
                 //re position the dice at the middle after
                 dice._rb.position = board.tileArray[5, 5].transform.position + new Vector3(0, 2, 0);
+                //change turns
                 Player1Turn = false;
                 Player2Turn = true;
 
@@ -134,6 +138,8 @@ public class Player1 : MonoBehaviour
             //Snake check 
             if (currentPosition == 23)
             {
+                //this is important as it makes sure the player moves to the intended position
+                //before the next turn starts
                 Player1Turn = true;
                 Player2Turn = false;
                 //disable button
@@ -154,6 +160,7 @@ public class Player1 : MonoBehaviour
                     animator.SetBool("Lost?", false);
                     //activate button again
                     button.gameObject.SetActive(true);
+                    //change turns
                     Player1Turn = false;
                     Player2Turn = true;
                 }
@@ -164,6 +171,8 @@ public class Player1 : MonoBehaviour
             //Snake 2
             if (currentPosition == 55)
             {
+                //this is important as it makes sure the player moves to the intended position
+                //before the next turn starts
                 Player1Turn = true;
                 Player2Turn = false;
                 //disable button
@@ -171,8 +180,6 @@ public class Player1 : MonoBehaviour
                 //play the sad animation
                 animator.SetBool("Lost?", true);
                 Debug.Log("AAAAAAAAAAA");
-
-
                 AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
                 // Check if the specific animation is over
                 if (stateInfo.IsName(animationName) && stateInfo.normalizedTime >= 1.0f)
@@ -185,6 +192,7 @@ public class Player1 : MonoBehaviour
                     animator.SetBool("Lost?", false);
                     //activate button again
                     button.gameObject.SetActive(true);
+                    //change turns
                     Player1Turn = false;
                     Player2Turn = true;
                 }
@@ -195,6 +203,8 @@ public class Player1 : MonoBehaviour
             //Ladder check
             if (currentPosition == 7)
             {
+                //this is important as it makes sure the player moves to the intended position
+                //before the next turn starts
                 Player1Turn = true;
                 Player2Turn = false;
                 //disable button
@@ -215,6 +225,7 @@ public class Player1 : MonoBehaviour
                     animator.SetBool("Victory?", false);
                     //activate button again
                     button.gameObject.SetActive(true);
+                    //change turns
                     Player1Turn = false;
                     Player2Turn = true;
                 }

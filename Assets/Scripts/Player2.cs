@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Inherits from player one as most stuff should be the same
 public class Player2 : Player1
 {
 
@@ -23,18 +24,19 @@ public class Player2 : Player1
   
 
 
-            //If the board was spawned move the player to the first Tile
-            //and move the dice to the middle
-            if (board.BoardGenerated && StartGame)
-            {
-                player1.SetActive(true);
-                StartPlayerPosition();
-                StartGame = false;
-                button.gameObject.SetActive(true);
-                dice.gameObject.SetActive(true);
-                dice._rb.position = board.tileArray[5, 5].transform.position + new Vector3(0, 2, 0);
-                diceRolled = true;
-            }
+         //If the board was spawned move the player to the first Tile
+        //and move the dice to the middle
+        if (board.BoardGenerated && StartGame)
+        {
+            player1.SetActive(true);
+            StartPlayerPosition();
+            StartGame = false;
+            button.gameObject.SetActive(true);
+            dice.gameObject.SetActive(true);
+            dice._rb.position = board.tileArray[5, 5].transform.position + new Vector3(0, 2, 0);
+            diceRolled = true;
+        }
+            //dont check any of the statments unleass its player 2 turn 
         if (Player2Turn == true)
         {
             //If board spawned and start already happened and the dice was rolled move the player to the rolled value
@@ -45,6 +47,7 @@ public class Player2 : Player1
                 diceRolled = true;
                 //re position the dice at the middle after
                 dice._rb.position = board.tileArray[5, 5].transform.position + new Vector3(0, 2, 0);
+                //change turns
                 Player1Turn = true;
                 Player2Turn = false;
             }
@@ -59,6 +62,8 @@ public class Player2 : Player1
             //Snake check 
             if (currentPosition == 23)
             {
+                //this is important as it makes sure the player moves to the intended position
+                //before the next turn starts
                 Player1Turn = false;
                 Player2Turn = true;
                 //disable button
@@ -79,6 +84,7 @@ public class Player2 : Player1
                     animator.SetBool("Lost?", false);
                     //activate button again
                     button.gameObject.SetActive(true);
+                    //change turns
                     Player2Turn = false;
                     Player1Turn = true;
                 }
@@ -88,6 +94,8 @@ public class Player2 : Player1
             //Snake 2
             if (currentPosition == 55)
             {
+                //this is important as it makes sure the player moves to the intended position
+                //before the next turn starts
                 Player1Turn = false;
                 Player2Turn = true;
                 //disable button
@@ -110,6 +118,7 @@ public class Player2 : Player1
                     animator.SetBool("Lost?", false);
                     //activate button again
                     button.gameObject.SetActive(true);
+                    //change turns
                     Player2Turn = false;
                     Player1Turn = true;
                 }
@@ -119,6 +128,8 @@ public class Player2 : Player1
             //Ladder check
             if (currentPosition == 7)
             {
+                //this is important as it makes sure the player moves to the intended position
+                //before the next turn starts
                 Player1Turn = false;
                 Player2Turn = true;
                 //disable button
@@ -139,6 +150,7 @@ public class Player2 : Player1
                     animator.SetBool("Victory?", false);
                     //activate button again
                     button.gameObject.SetActive(true);
+                    //change turns
                     Player2Turn = false;
                     Player1Turn = true;
                 }

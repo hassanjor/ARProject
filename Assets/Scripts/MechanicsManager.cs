@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class MechanicsManager : MonoBehaviour
 {
+    //this class only positions the mechanics at the right position 
 
+
+    //refrence to the board
     public Board board;
-    //objects
+    //traps mechanics
     public GameObject snake;
     public GameObject snake2;
     public GameObject ladder;

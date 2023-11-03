@@ -20,6 +20,7 @@ public class Board : MonoBehaviour
 
     public bool clicked = false;
 
+    //Array of tiles
     public Tile[,] tileArray;
 
     void Start()
@@ -27,6 +28,7 @@ public class Board : MonoBehaviour
         placeIndicator = FindObjectOfType<PlaceIndicator>();
     }
 
+    //Generate the board when the button is clicked
     public void Clicked()
     {
         GenerateBoard();
@@ -44,6 +46,7 @@ public class Board : MonoBehaviour
 
     public void GenerateBoard()
     {
+        //array so we can check each tile individually 
         tileArray = new Tile[width, height];
 
         //Making the board
@@ -64,7 +67,7 @@ public class Board : MonoBehaviour
                 var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
                 spawnedTile.Init(isOffset);
 
-                // Store the tile in the array
+                // Store the tile in the array, again notice the flipping of x and y
                 tileArray[y, x] = spawnedTile;
             }
         }
