@@ -125,6 +125,38 @@ public class Player2 : Player1
                
             }
 
+            //snake 3 check
+            if (currentPosition == 96)
+            {
+                //this is important as it makes sure the player moves to the intended position
+                //before the next turn starts
+                Player1Turn = false;
+                Player2Turn = true;
+                //disable button
+                button.gameObject.SetActive(false);
+                //play the sad animation
+                animator.SetBool("Lost?", true);
+                Debug.Log("AAAAAAAAAAA");
+                AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                // Check if the specific animation is over
+                if (stateInfo.IsName(animationName) && stateInfo.normalizedTime >= 1.0f)
+                {
+                    //move player down to snake tail
+                    StartCoroutine(MovePlayer(board.tileArray[7, 7].transform.position));
+                    //set current position to the position player was moved to 
+                    currentPosition = 77;
+                    //stop sad animation
+                    animator.SetBool("Lost?", false);
+                    //activate button again
+                    button.gameObject.SetActive(true);
+                    //change turns
+                    Player2Turn = false;
+                    Player1Turn = true;
+                }
+
+
+            }
+
             //Ladder check
             if (currentPosition == 7)
             {
@@ -155,6 +187,38 @@ public class Player2 : Player1
                     Player1Turn = true;
                 }
                
+            }
+
+            //Ladder2 check 
+            if (currentPosition == 50)
+            {
+                //this is important as it makes sure the player moves to the intended position
+                //before the next turn starts
+                Player1Turn = false;
+                Player2Turn = true;
+                //disable button
+                button.gameObject.SetActive(false);
+                //play the happy animation
+                animator.SetBool("Victory?", true);
+                Debug.Log("YAYYYYYY");
+
+                AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                // Check if the specific animation is over
+                if (stateInfo.IsName(ladderAnimationName) && stateInfo.normalizedTime >= 1.0f)
+                {
+                    //move player up the ladder
+                    StartCoroutine(MovePlayer(board.tileArray[0, 7].transform.position));
+                    //set current position to the position player was moved to 
+                    currentPosition = 70;
+                    //stop happy animation
+                    animator.SetBool("Victory?", false);
+                    //activate button again
+                    button.gameObject.SetActive(true);
+                    //change turns
+                    Player2Turn = false;
+                    Player1Turn = true;
+                }
+
             }
 
         }

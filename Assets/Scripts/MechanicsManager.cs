@@ -12,7 +12,9 @@ public class MechanicsManager : MonoBehaviour
     //traps mechanics
     public GameObject snake;
     public GameObject snake2;
+    public GameObject snake3;
     public GameObject ladder;
+    public GameObject ladder2;
 
     // Start is called before the first frame update
     void Start()
@@ -38,10 +40,22 @@ public class MechanicsManager : MonoBehaviour
 
         if (board.BoardGenerated)
         {
+            snake3.transform.position = board.tileArray[6, 8].transform.position + new Vector3(0.0f, 0.1f, 0.0f);
+
+        }
+
+        if (board.BoardGenerated)
+        {
             ladder.transform.position = board.tileArray[7, 1].transform.position + new Vector3(0.0f, 0.1f, 0.0f);
             
         }
 
+
+        if (board.BoardGenerated)
+        {
+            ladder2.transform.position = board.tileArray[0, 6].transform.position + new Vector3(0.0f, 0.1f, 0.0f);
+
+        }
 
     }
 }
