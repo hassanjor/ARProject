@@ -11,6 +11,9 @@ public class Player1 : MonoBehaviour
     public Animator animator;
     //Refrence to hide rolling the dice button 
     public Button button;
+    //restart and quitting buttons 
+    public Button restartButton;
+    public Button quitButton;
     //Board refrence 
     public Board board;
     //Dice reference 
@@ -27,13 +30,26 @@ public class Player1 : MonoBehaviour
 
     //manipulates button spawning
     public bool diceRolled = false;
-    //both static variables so the values stay the same in parent and child
+    //static variables so the values stay the same in parent and children
     public static bool Player1Turn = true;
     public static bool Player2Turn = false;
+    public static bool Player1won = false;
+    public static bool Player2won = false;
+
     //animations references to detect when they are done
     public string animationName;
     public string ladderAnimationName;
-    void Start()
+
+   //this is so when we restart the game everything is back to normal
+   void Awake()
+    {
+        Player1Turn = true;
+        Player2Turn = false;
+        Player1won = false;
+        Player2won = false;
+
+    }
+   void Start()
     {
         //deactivate the roll button, and dice
         button.gameObject.SetActive(false);
@@ -45,7 +61,6 @@ public class Player1 : MonoBehaviour
         //move player to the first Tile
         Vector3 worldPosition = board.tileArray[currentPosition % board.width, currentPosition / board.width].transform.position;
         transform.position = worldPosition;
-
     }
 
     public void PlayerMovement()
@@ -54,6 +69,10 @@ public class Player1 : MonoBehaviour
         int result = dice.rollValue;
         //+= adds onto it so it always is saving the position
         currentPosition += result;
+
+        int maxPosition = board.width * board.height - 1; // The maximum valid position
+        currentPosition = Mathf.Clamp(currentPosition, 0, maxPosition);
+
         //lerping using a value
         float interpolationRatio = (float)elapsedFrames / interpolationFramesCount;
         //this considers the width and height of the board that the player cant go off it and will instead go to the next row 
@@ -294,6 +313,39 @@ public class Player1 : MonoBehaviour
                     }
 
                 }
+
+            //Win Check
+            if(currentPosition >= 99)
+            {
+                Player1won = true;
+                // Ensure currentPosition does not exceed the board's bounds
+                int maxPosition = board.width * board.height - 1;
+                currentPosition = Mathf.Clamp(currentPosition, 0, maxPosition);
+
+                //disable button
+                button.gameObject.SetActive(false);
+
+                //move player up the ladder
+                StartCoroutine(MovePlayer(board.tileArray[9, 9].transform.position));
+                currentPosition = 99;
+                Debug.Log("Player 1 won");
+           
+            }
+            //play animation
+            if(Player1won)
+            {
+                restartButton.gameObject.SetActive(true);
+                quitButton.gameObject.SetActive(true);
+                animator.SetBool("GameOverWon?", true);
+            }
+            //lose check play animation
+            if (Player2won) 
+            {
+                restartButton.gameObject.SetActive(true);
+                quitButton.gameObject.SetActive(true);
+                animator.SetBool("GameOverLost?", true);
+
+            }
 
         }
     }

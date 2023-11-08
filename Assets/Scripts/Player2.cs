@@ -220,6 +220,34 @@ public class Player2 : Player1
                 }
 
             }
+            //Win Check
+            if (currentPosition >= 99)
+            {
+                Player2won = true;
+                // Ensure currentPosition does not exceed the board's bounds
+                int maxPosition = board.width * board.height - 1;
+                currentPosition = Mathf.Clamp(currentPosition, 0, maxPosition);
+
+                //disable button
+                button.gameObject.SetActive(false);
+
+                //move player up the ladder
+                StartCoroutine(MovePlayer(board.tileArray[9, 9].transform.position));
+                currentPosition = 99;
+                Debug.Log("Player 2 won");
+     
+
+            }
+            //play animation
+            if (Player2won)
+            {
+                animator.SetBool("GameOverWon?", true);
+            }
+            //play animation
+            if (Player1won)
+            {
+                animator.SetBool("GameOverLost?", true);
+            }
 
         }
     }
